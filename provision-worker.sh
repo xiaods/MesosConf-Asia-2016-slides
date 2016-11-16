@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#USE_ALIYUN_MIRROR=1
+USE_ALIYUN_MIRROR=1
 
 MANAGER_IP=$1
 NODE_IP=$2
@@ -10,16 +10,15 @@ TOKEN=`cat /vagrant/worker_token`
 if ! which docker >/dev/null 2>&1; then
 	if [ -n "$USE_ALIYUN_MIRROR" ]
 	then
-		sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/' /etc/apt/sources.list
-		curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -
-		echo DOCKER_OPTS="'--registry-mirror https://6udu7vtl.mirror.aliyuncs.com'" > /etc/default/docker
-		sudo service docker restart
-	else
+    curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+    curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -
+    sudo cp -n /lib/systemd/system/docker.service /etc/systemd/system/docker.service
+    sudo sed -i "s|ExecStart=/usr/bin/dockerd|ExecStart=/usr/bin/dockerd --registry-mirror=https://vwrzfgqh.mirror.aliyuncs.com|g" /etc/systemd/system/docker.service
+    sudo systemctl daemon-reload
+    sudo service docker restart
+  else
 		curl -sSL https://get.docker.com/ | sh
 	fi
 	gpasswd -a vagrant docker
 	docker swarm join --listen-addr ${NODE_IP}:2377 --advertise-addr ${NODE_IP} --token=$TOKEN ${MANAGER_IP}:2377
 fi
-
-
-

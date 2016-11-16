@@ -16,7 +16,7 @@ $node_ips = $num_nodes.times.collect { |n| $worker_ip_base + "#{n+2}" }
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   def customize_vm(config)
-    config.vm.box = "ubuntu/trusty64"
+    config.vm.box = "centos/7"
 
     config.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--memory", $vm_mem]
