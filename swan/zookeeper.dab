@@ -1,0 +1,66 @@
+{
+  "Version": "",
+  "Services": {
+    "zookeeper_zookeeper": {
+      "Name": "zookeeper_zookeeper",
+      "Labels": {
+        "com.docker.stack.namespace": "zookeeper",
+        "crane.reserved.permissions.1.r": "true",
+        "crane.reserved.permissions.1.w": "true",
+        "crane.reserved.permissions.1.x": "true"
+      },
+      "TaskTemplate": {
+        "ContainerSpec": {
+          "Image": "mbabineau/zookeeper-exhibitor:latest"
+        },
+        "Resources": {
+          "Limits": {},
+          "Reservations": {}
+        },
+        "RestartPolicy": {
+          "Condition": "any",
+          "MaxAttempts": 0
+        },
+        "Placement": {},
+        "LogDriver": {}
+      },
+      "Mode": {
+        "Replicated": {
+          "Replicas": 1
+        }
+      },
+      "UpdateConfig": {
+        "FailureAction": "continue"
+      },
+      "Networks": [
+        "mynet"
+      ],
+      "EndpointSpec": {
+        "Mode": "vip",
+        "Ports": [
+          {
+            "Protocol": "tcp",
+            "TargetPort": 8181,
+            "PublishedPort": 8181
+          },
+          {
+            "Protocol": "tcp",
+            "TargetPort": 2181,
+            "PublishedPort": 2181
+          },
+          {
+            "Protocol": "tcp",
+            "TargetPort": 2888,
+            "PublishedPort": 2888
+          },
+          {
+            "Protocol": "tcp",
+            "TargetPort": 3888,
+            "PublishedPort": 3848
+          }
+        ]
+      },
+      "RegistryAuth": ""
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "Services": {
+    "master": {
+      "Name": "master",
+      "Labels": {
+        "name": "master"
+      },
+      "TaskTemplate": {
+        "ContainerSpec": {
+          "Image": "mesosphere/mesos-master:1.0.1-2.0.93.ubuntu1404",
+          "Labels": {
+            "name": "master"
+          },
+          "Env": [
+            "MESOS_ZK=zk://zk1:2181/mesos",
+            "MESOS_QUORUM=1",
+            "MESOS_REGISTRY=replicated_log",
+            "MESOS_HOSTNAME=$(hostname)",
+            "LIBPROCESS_IP=$(hostname)"
+          ],
+          "User": "root"
+        },
+        "RestartPolicy": {
+          "Condition": "none",
+          "Delay": 3000000000,
+          "MaxAttempts": 1,
+          "Window": 3000000000
+        },
+        "LogDriver": {
+          "Name": "json-file"
+        }
+      },
+      "Mode": {
+        "Replicated": {
+          "Replicas": 1
+        }
+      },
+      "UpdateConfig": null,
+      "Networks": [
+        "mynet"
+      ],
+      "EndpointSpec": {
+        "Mode": "vip",
+        "Ports": [
+          {
+            "Name": "testport",
+            "Protocol": "tcp",
+            "TargetPort": 5000,
+            "PublishedPort": 5000
+          }
+        ]
+      }
+    }
+  },
+  "Version": "1"
+}
