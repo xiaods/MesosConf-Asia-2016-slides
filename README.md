@@ -1,36 +1,24 @@
-# docker-swarm-mode-vagrant
+# Shipping Mesos Cluster with Swarmkit
 
-This project is to similify the setup for [Docker Swarm Mode][1] with Vagrant.
-
-It will automatically create a swarm cluster of Docker, and the first node will be the manager and others will be worker.
-
-
-# Usage
-
-For user in China, you can uncomment the following line in "provision-manager.sh", "provision-worker.sh" for using the [Aliyun Mirrors](http://mirrors.aliyun.com) to speed up the package installation/update.
-
-    #USE_ALIYUN_MIRROR=1
+Swarm, are u kiding? yes, i will introduce new way to deploy and use mesos
+cluster. here i want to explain why swarm is a better deliver system to deploy
+any way environment. and Docker also is good fit on cross environment. we don't
+care the swarm to instead of mesos. we know mesos's more stable feature than
+swarm. trust me, mesos is production ready cluster system, it also support big
+data infrastructure tooling than docker. in last session, i will demo how to
+one click to deploy a 3-master mesos cluster and auto configuration based on
+the ip.
 
 
-This application is available in the form of a Docker image that you can run as a container by executing this command:
-    
-    vagrant up
+This repo contains slides and codes.
 
-
-
-# Play with it
-
-Run the Swarm manager 
-
-	vagrant ssh node-1
-
-
-```
-docker info
-docker node ls
-```
+https://mesosconasia2016.sched.org/event/8Tua/shipping-mesos-cluster-with-swarm-deshi-xiao-dataman
 
 # References
-[Swarm mode overview][1]
+* [Swarm mode overview][1]
+* [Crane, Another UCP][2]
+* [Swan, Another container orchestration platform for Mesos][3]
 
 [1]: https://docs.docker.com/engine/swarm/
+[2]: https://github.com/Dataman-Cloud/crane
+[3]: https://github.com/Dataman-Cloud/swan
